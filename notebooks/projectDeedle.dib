@@ -1,0 +1,146 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","aliases":["c#","C#"],"languageName":"C#"},{"name":"vscode","languageName":null,"aliases":["frontend"]}]}}
+
+#!fsharp
+
+#r "nuget: Deedle, 3.0.0"
+#r "nuget: XPlot.Plotly"
+
+#!fsharp
+
+open Deedle
+open XPlot.Plotly
+
+#!fsharp
+
+let correctVariety variety =
+    match variety with
+    | "catuaì" | "catuaí" -> "catuai"
+    | "mundo novo, red catuaí" -> "mundo novo, red catuai"
+    | "sl 34" -> "sl34"
+    | "acaiá" -> "acaia"
+    | "yellow borubon" -> "yellow bourbon"
+    | "yellow catuaí" -> "yellow catuai"
+    | "geisha enano" -> "geisha"
+    | "green tip pacamara" | "bronze tip pacamara" -> "pacarama"
+
+    // heirlooms
+    // | "heirlooms ’74-219 & ’74-212" -> "74219, 74212"
+    | "heirlooms ’74-219 & ’74-212" | "74110" | "74158"
+    | "74212" | "74219" | "74122" | "74142"
+    | "gibirinna 74110, 74112" | "dega" | "wolisho"
+    | "daga" | "krume 74142" | "krume 74122"
+    | "serto 74112" | "etiopes" -> "heirloom"
+    | _ -> variety
+
+let cleanVarieties (rawInput: string)=
+    rawInput.Split(", ")
+    |> Seq.map (fun variety -> correctVariety (variety.ToLower()))
+    |> Seq.reduce (fun a b -> $"{a}, {b}")
+
+#!fsharp
+
+let correctProfile profile =
+    match profile with
+    | "almonds" -> "almond"
+    | "berries" -> "berry"
+    | "blackberries" -> "blackberry"
+    | "blueberries" -> "blueberry"
+    | "caramell" -> "caramel"
+    | "citrus" -> "citrus fruit"
+    | "classic chocolate and milk" -> "milk chocolate"
+    | "cranberries" -> "cranberry"
+    | "dried fruits" -> "dried fruit"
+    | "figs" -> "fig"
+    | "florals" | "flowers" | "floral" -> "flower"
+    | "fruity" -> "fruit"
+    | "gooseberries" -> "gooseberry"
+    | "white jasmine" | "jazmin" -> "jasmine"
+    | "macadamia" -> "macadamia nut"
+    | "marcipan" -> "marzipan"
+    | "nectarine melon" -> "nectarine, melon"
+    | "nutty" -> "nuts"
+    | "passionfruit" -> "passion fruit"
+    | "peach,honey" -> "peach, honey"
+    | "peaches" -> "peach"
+    | "pralines" -> "praline"
+    | "raisind" -> "raisins"
+    | "red apples" -> "red apple"
+    | "red berries" -> "red berry"
+    | "roses" -> "rose"
+    | "stone fruits" -> "stone fruit"
+    | "strawberries" -> "strawberry"
+    | "sugar cane" -> "sugarcane"
+    | "tropical fruits" -> "tropical fruit"
+    | "white florals" -> "white flower"
+    | "yellow fruits" | "yellow mature fruit" -> "yellow fruit"
+    | _ -> profile
+
+
+let cleanProfiles (rawInput: string)=
+    rawInput.Split(", ")
+    |> Seq.map (fun profile -> correctProfile (profile.ToLower()))
+    |> Seq.reduce (fun a b -> $"{a}, {b}")
+
+#!fsharp
+
+let df = Frame.ReadCsv("Coffees.csv")
+
+let newVarieties = 
+  df.GetColumn<string>("Variety") 
+  |> Series.mapValues cleanVarieties
+df.ReplaceColumn("Variety", newVarieties)
+
+let newProfiles = 
+  df.GetColumn<string>("Profile") 
+  |> Series.mapValues cleanProfiles
+df.ReplaceColumn("Profile", newProfiles)
+
+df.SaveCsv("CleanCoffees.csv")
+
+let varietiesDf =
+  df
+  |> Frame.sliceCols ["Variety"; "Country"]
+  // |> Frame.groupRowsBy "Variety"
+  |> Frame.sortRows "Variety"
+
+varietiesDf.SaveCsv("varietiesGroups.csv", includeRowKeys=false)
+
+let profilesWriter = new StreamWriter("Profiles.csv")
+
+df
+|> Frame.getCol "Profile"
+|> Series.values
+|> Seq.map (fun (row: string) -> row.Split(", "))
+|> Seq.concat
+|> Seq.distinct
+|> Seq.sort
+|> Seq.iter (fun value -> fprintfn profilesWriter "%s" value)
+
+profilesWriter.Close()
+
+// |> Series.map (fun row -> row.)
+// // |> Frame.groupRowsBy "Variety"
+// // |> Frame.reduceLevel fst (+)
+// // |> Series.observations
+// |> Chart.Bar
+// |> Chart.Show
+
+#!fsharp
+
+let columnCounts (df: Frame<int,string>) column =
+    df
+    |> Frame.getCol column
+    |> Series.values
+    |> Seq.map (fun (row: string) -> row.Split(", "))
+    |> Seq.concat
+    |> Seq.countBy id
+    // |> Seq.iter (fun (variety, count) -> printfn "%s %i" variety count)
+    |> Chart.Column
+    |> Chart.Show
+
+columnCounts df "Variety"
+columnCounts df "Country"
+columnCounts df "Profile"
+columnCounts df "Roastery Country"

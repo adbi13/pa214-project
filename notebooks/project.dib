@@ -1,0 +1,199 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","languageName":"C#","aliases":["c#","C#"]},{"name":"vscode","aliases":["frontend"],"languageName":null},{"name":".NET","aliases":[],"languageName":null},{"name":"fsharp","languageName":"F#","aliases":["f#","F#"]},{"name":"html","languageName":"HTML","aliases":[]},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"kql","languageName":"KQL","aliases":[]},{"name":"mermaid","languageName":"Mermaid","aliases":[]},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"sql","languageName":"SQL","aliases":[]},{"name":"value","aliases":[],"languageName":null},{"name":"webview","aliases":[]}]}}
+
+#!fsharp
+
+#r "nuget: FSharp.Data, 5.0.2"
+#r "nuget: Plotly.NET, 4.0.0"
+#r "nuget: Plotly.NET.Interactive, 4.0.0"
+
+#!fsharp
+
+open FSharp.Data
+open Plotly.NET
+open System.IO
+
+#!fsharp
+
+type CoffeeDataset = CsvProvider<"Coffees.csv">
+
+let dataset = CoffeeDataset.Load("Coffees.csv")
+
+#!fsharp
+
+// let showUniqueValues (dataset: CoffeeDataset) =
+//     for header in dataset.Headers.Value do
+//         printf $"{header}: "
+//         dataset.Rows
+//         |> Seq.map (fun row -> row.ToValueTuple())
+//         |> Seq.distinct
+//         |> Seq.iter (fun value -> printf $"{value} ")
+
+let profilesWriter = new StreamWriter("Profiles.csv")
+
+
+
+dataset.Rows
+|> Seq.map (fun row -> Seq.ofArray (row.Profile.Split(", ")))
+|> Seq.concat
+|> Seq.map (fun profile -> profile.ToLower())
+|> Seq.distinct
+|> Seq.sort
+|> Seq.iter (fun value -> fprintfn profilesWriter "%s" value)
+
+profilesWriter.Close()
+
+#!fsharp
+
+let correctProfile profile =
+    match profile with
+    | "almonds" -> "almond"
+    | "berries" -> "berry"
+    | "blackberries" -> "blackberry"
+    | "blueberries" -> "blueberry"
+    | "caramell" -> "caramel"
+    | "citrus" -> "citrus fruit"
+    | "classic chocolate and milk" -> "milk chocolate"
+    | "cranberries" -> "cranberry"
+    | "dried fruits" -> "dried fruit"
+    | "figs" -> "fig"
+    | "florals" | "flowers" | "floral" -> "flower"
+    | "fruity" -> "fruit"
+    | "gooseberries" -> "gooseberry"
+    | "white jasmine" | "jazmin" -> "jasmine"
+    | "macadamia" -> "macadamia nut"
+    | "marcipan" -> "marzipan"
+    | "nectarine melon" -> "nectarine, melon"
+    | "nutty" -> "nuts"
+    | "passionfruit" -> "passion fruit"
+    | "peach,honey" -> "peach, honey"
+    | "peaches" -> "peach"
+    | "pralines" -> "praline"
+    | "raisind" -> "raisins"
+    | "red apples" -> "red apple"
+    | "red berries" -> "red berry"
+    | "roses" -> "rose"
+    | "stone fruits" -> "stone fruit"
+    | "strawberries" -> "strawberry"
+    | "sugar cane" -> "sugarcane"
+    | "tropical fruits" -> "tropical fruit"
+    | "white florals" -> "white flower"
+    | "yellow fruits" | "yellow mature fruit" -> "yellow fruit"
+    | _ -> profile
+
+#!fsharp
+
+let varietiesWriter = new StreamWriter("Varieties.csv")
+
+dataset.Rows
+|> Seq.map (fun row -> Seq.ofArray (row.Variety.Split(", ")))
+|> Seq.concat
+|> Seq.map (fun profile -> profile.ToLower())
+// |> Seq.distinct
+|> Seq.sort
+|> Seq.countBy id
+|> Seq.iter (fun value -> fprintfn varietiesWriter "%s %i" (fst value) (snd value))
+
+varietiesWriter.Close()
+
+#!fsharp
+
+let correctVariety variety =
+    match variety with
+    | "heirlooms ’74-219 & ’74-212" -> "74219, 74212"
+    | "catuaì" | "catuaí" -> "catuai"
+    | "krume 74122" -> "74122"
+    | "krume 74142" -> "74142"
+    | "mundo novo, red catuaí" -> "mundo novo, red catuai"
+    | "serto 74112" -> "74112"
+    | "sl 34" -> "sl34"
+    | "yellow borubon" -> "yellow bourbon"
+    | "yellow catuaí" -> "yellow catuai"
+    | _ -> variety
+
+#!fsharp
+
+dataset.Rows
+|> Seq.map (fun row -> Seq.ofArray (row.Variety.Split(", ")))
+|> Seq.concat
+|> Seq.map (fun profile -> correctVariety (profile.ToLower()))
+|> Seq.countBy id
+|> Chart.Column
+|> Chart.withSize(1500.0,700.0)
+|> Chart.show
+
+#!fsharp
+
+dataset.Rows
+|> Seq.map (fun row -> Seq.ofArray (row.Profile.Split(", ")))
+|> Seq.concat
+|> Seq.map (fun profile -> correctProfile (profile.ToLower()))
+|> Seq.countBy id
+|> Chart.Column
+|> Chart.withSize(1500.0,700.0)
+|> Chart.show
+
+#!fsharp
+
+dataset.Rows
+|> Seq.map (fun row -> row.Country)
+|> Seq.countBy id
+|> Chart.Column
+|> Chart.withSize(1500.0,700.0)
+|> Chart.show
+
+#!fsharp
+
+type Coffee = {
+    RoasteryName: string
+    RoasteryCountry: string
+    RoasteryCity: string
+    Name: string
+    Country: string
+    Region: string
+    Farm: string
+    Processing: string
+    Varieties: string list
+    AltitudeMin: option<int>
+    AltitudeMax: option<int>
+    Price: decimal
+    Profiles: string list
+    Score: float
+}
+
+let cleanProfiles (rawInput: string)=
+    rawInput.Split(", ")
+    |> Seq.map (fun profile -> correctProfile (profile.ToLower()))
+    |> Seq.reduce (fun a b -> $"{a}, {b}")
+
+let cleanVarieties (rawInput: string)=
+    rawInput.Split(", ")
+    |> Seq.map (fun variety -> correctVariety (variety.ToLower()))
+    |> Seq.reduce (fun a b -> $"{a}, {b}")
+
+let rowToCoffee (row: CoffeeDataset.Row) =
+    {
+        RoasteryName = row.Roastery;
+        RoasteryCountry = row.``Roastery Country``;
+        RoasteryCity = row.``Roastery City``;
+        Name = row.Name;
+        Country = row.Country;
+        Region = row.Region;
+        Farm = row.Farm;
+        Processing = row.Processing;
+        Varieties = List.ofArray ((cleanVarieties row.Variety).Split(", "));
+        AltitudeMin = Option.ofNullable row.``Altitude min``;
+        AltitudeMax = Option.ofNullable row.``Altitude max``;
+        Price = row.``Price (EUR per kg)``;
+        Profiles = List.ofArray ((cleanProfiles row.Profile).Split(", "));
+        Score = row.Score;
+    }
+
+let coffeesWriter = new StreamWriter("clean.csv")
+
+// dataset.Map()
+
+dataset.Map(
+    fun row -> { row with Variety = row.Variety.ToLower() }
+).Save(coffeesWriter)
