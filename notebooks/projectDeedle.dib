@@ -1,20 +1,20 @@
 #!meta
 
-{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","aliases":["c#","C#"],"languageName":"C#"},{"name":"vscode","aliases":["frontend"]},{"name":".NET","aliases":[]},{"name":"fsharp","aliases":["f#","F#"],"languageName":"F#"},{"name":"html","aliases":[],"languageName":"HTML"},{"name":"kql","aliases":[],"languageName":"KQL"},{"name":"mermaid","aliases":[],"languageName":"Mermaid"},{"name":"pwsh","aliases":["powershell"],"languageName":"PowerShell"},{"name":"sql","aliases":[],"languageName":"SQL"},{"name":"value","aliases":[]}]}}
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":".NET"},{"aliases":["C#","c#"],"languageName":"C#","name":"csharp"},{"aliases":["F#","f#"],"languageName":"F#","name":"fsharp"},{"aliases":[],"languageName":"HTML","name":"html"},{"aliases":[],"languageName":"KQL","name":"kql"},{"aliases":[],"languageName":"Mermaid","name":"mermaid"},{"aliases":["powershell"],"languageName":"PowerShell","name":"pwsh"},{"aliases":[],"languageName":"SQL","name":"sql"},{"aliases":[],"name":"value"},{"aliases":["frontend"],"name":"vscode"}]}}
 
 #!fsharp
 
 #r "nuget: Deedle, 3.0.0"
 #r "nuget: XPlot.Plotly"
-#r "nuget: FSharp.Charting, 2.1.0"
-#r "nuget: ScottPlot, 4.1.61"
+// #r "nuget: FSharp.Charting, 2.1.0"
+// #r "nuget: ScottPlot, 4.1.61"
 
 #!fsharp
 
 open Deedle
 open XPlot.Plotly
 // open FSharp.Charting
-open ScottPlot
+// open ScottPlot
 
 #!fsharp
 
@@ -154,7 +154,7 @@ columnCounts df "Roastery Country"
 let tastesDf = Frame.ReadCsv("../data/ProfilesTastes.csv")
 
 let profiles = Series.values <| Frame.getCol "Profile" tastesDf
-let tastes = Series.values <| Frame.getCol "Profile" tastesDf
+let tastes = Series.values <| Frame.getCol "Taste" tastesDf
 
 let (tasteMap: Map<string, string>) = Map.ofSeq <| Seq.zip profiles tastes
 
@@ -173,18 +173,15 @@ df.AddColumn("Tastes", coffeeTastes)
 #!fsharp
 
 let createTasteRadar (df: Frame<int,string>) (column: string) value =
-    let plt = Plot(400, 300);
+    // let plt = Plot(400, 300);
     df
     |> Frame.filterRowsBy column value
     |> Frame.getCol "Tastes"
     |> Series.values
     |> Seq.concat
     |> Seq.countBy id
-    |> Seq.map snd
-    |> Seq.map float
-    |> Array.ofSeq
-    |> plt.AddRadar
-    |> ignore
-    plt.SaveFig("test.png")
+    // |> Seq.map snd
+    |> Chart.Pie
+    |> Chart.Show
 
-createTasteRadar df "Variety" "catuai"
+createTasteRadar df "Country" "Ethiopia"
