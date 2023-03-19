@@ -1,16 +1,20 @@
 #!meta
 
-{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","aliases":["c#","C#"],"languageName":"C#"},{"name":"vscode","languageName":null,"aliases":["frontend"]}]}}
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","aliases":["c#","C#"],"languageName":"C#"},{"name":"vscode","aliases":["frontend"]},{"name":".NET","aliases":[]},{"name":"fsharp","aliases":["f#","F#"],"languageName":"F#"},{"name":"html","aliases":[],"languageName":"HTML"},{"name":"kql","aliases":[],"languageName":"KQL"},{"name":"mermaid","aliases":[],"languageName":"Mermaid"},{"name":"pwsh","aliases":["powershell"],"languageName":"PowerShell"},{"name":"sql","aliases":[],"languageName":"SQL"},{"name":"value","aliases":[]}]}}
 
 #!fsharp
 
 #r "nuget: Deedle, 3.0.0"
 #r "nuget: XPlot.Plotly"
+#r "nuget: FSharp.Charting, 2.1.0"
+#r "nuget: ScottPlot, 4.1.61"
 
 #!fsharp
 
 open Deedle
 open XPlot.Plotly
+// open FSharp.Charting
+open ScottPlot
 
 #!fsharp
 
@@ -85,7 +89,7 @@ let cleanProfiles (rawInput: string)=
 
 #!fsharp
 
-let df = Frame.ReadCsv("Coffees.csv")
+let df = Frame.ReadCsv("../data/Coffees.csv")
 
 let newVarieties = 
   df.GetColumn<string>("Variety") 
@@ -107,7 +111,7 @@ let varietiesDf =
 
 varietiesDf.SaveCsv("varietiesGroups.csv", includeRowKeys=false)
 
-let profilesWriter = new StreamWriter("Profiles.csv")
+let profilesWriter = new StreamWriter("../data/Profiles.csv")
 
 df
 |> Frame.getCol "Profile"
@@ -144,3 +148,43 @@ columnCounts df "Variety"
 columnCounts df "Country"
 columnCounts df "Profile"
 columnCounts df "Roastery Country"
+
+#!fsharp
+
+let tastesDf = Frame.ReadCsv("../data/ProfilesTastes.csv")
+
+let profiles = Series.values <| Frame.getCol "Profile" tastesDf
+let tastes = Series.values <| Frame.getCol "Profile" tastesDf
+
+let (tasteMap: Map<string, string>) = Map.ofSeq <| Seq.zip profiles tastes
+
+let profilesToTastes (profileString: string) =
+    profileString.Split(", ")
+    |> Array.map (fun profile -> tasteMap[profile])
+    |> Array.distinct
+
+
+let coffeeTastes =
+    df.GetColumn<string>("Profile")
+    |> Series.mapValues profilesToTastes
+
+df.AddColumn("Tastes", coffeeTastes)
+
+#!fsharp
+
+let createTasteRadar (df: Frame<int,string>) (column: string) value =
+    let plt = Plot(400, 300);
+    df
+    |> Frame.filterRowsBy column value
+    |> Frame.getCol "Tastes"
+    |> Series.values
+    |> Seq.concat
+    |> Seq.countBy id
+    |> Seq.map snd
+    |> Seq.map float
+    |> Array.ofSeq
+    |> plt.AddRadar
+    |> ignore
+    plt.SaveFig("test.png")
+
+createTasteRadar df "Variety" "catuai"
