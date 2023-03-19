@@ -1,3 +1,4 @@
+Profile,Taste
 almond,Nutty/Cocoa
 apple,Fruity
 apricot,Fruity
@@ -6,29 +7,29 @@ bergamot,Fruity
 berry,Fruity
 black cherry,Fruity
 black currant jam,Fruity
-black tea
+black tea,Floral
 blackberry,Fruity
 blackberry jam,Fruity
 blackcurrant,Fruity
 blood orange,Fruity
 blueberry,Fruity
-brioche
-brown spice
-brown sugar
-butterscotch
+brioche,Sweet
+brown spice,Spices
+brown sugar,Sweet
+butterscotch,Sweet
 candied orange,Fruity
-candy floss
-cane sugar
-caramel
-champagne
+candy floss,Sweet
+cane sugar,Sweet
+caramel,Sweet
+champagne,Sour/Fermented
 cherry,Fruity
 cherry blossom,Fruity
 chocolate,Nutty/Cocoa
 chocolate cake,Nutty/Cocoa
-cinnamon
+cinnamon,Spices
 citrus fruit,Fruity
 clementine,Fruity
-cloves
+cloves,Spices
 cocoa,Nutty/Cocoa
 cookie,Nutty/Cocoa
 cranberry,Fruity
@@ -37,20 +38,20 @@ dates,Fruity
 dried fruit,Fruity
 dried mango,Fruity
 dried strawberries,Fruity
-earl grey tea
-elderflower
-fig
-flower
+earl grey tea,Floral
+elderflower,Floral
+fig,Fruity
+flower,Floral
 forest fruit,Fruity
 fruit,Fruity
-gingerbread
+gingerbread,Sweet
 gooseberry,Fruity
 grapefruit,Fruity
 hazelnut,Nutty/Cocoa
-herbs
-honey
-honeysuckle
-jasmine
+herbs,Floral
+honey,Sweet
+honeysuckle,Floral
+jasmine,Floral
 kiwi,Fruity
 lemon,Fruity
 lemon marmelade,Fruity
@@ -60,30 +61,30 @@ litchi,Fruity
 macadamia nut,Nutty/Cocoa
 mandarin,Fruity
 mango,Fruity
-maple syrup
+maple syrup,Sweet
 maraschino cherry,Fruity
 marzipan,Nutty/Cocoa
 melon,Fruity
 milk chocolate,Nutty/Cocoa
-molasses
-mulled wine
+molasses,Sweet
+mulled wine,Sour/Fermented
 nectarine,Fruity
 nougat,Nutty/Cocoa
 nut cream,Nutty/Cocoa
-nutmeg
+nutmeg,Spices
 nuts,Nutty/Cocoa
 orange,Fruity
-orange blossom
+orange blossom,Floral
 passion fruit,Fruity
-pastry
+pastry,Sweet
 peach,Fruity
-peach ice tea
+peach ice tea,Floral
 pear,Fruity
 pecan,Nutty/Cocoa
 pineapple,Fruity
 plum,Fruity
 praline,Nutty/Cocoa
-prune
+prune,Fruity
 raisin,Fruity
 raisins,Fruity
 raspberry,Fruity
@@ -92,22 +93,22 @@ red apple,Fruity
 red berry,Fruity
 red currant,Fruity
 red plum,Fruity
-red wine
+red wine,Sour/Fermented
 roasted almonds,Nutty/Cocoa
-rose
-rum
-shortbread cookies
+rose,Floral
+rum,Sour/Fermented
+shortbread cookies,Sweet
 starfruit,Fruity
 stone fruit,Fruity
 strawberry,Fruity
-sugarcane
+sugarcane,Sweet
 sweet apple,Fruity
 sweet lemon,Fruity
-tea
-toffee
+tea,Floral
+toffee,Sweet
 tropical fruit,Fruity
-vanilla
-white flower
+vanilla,Floral
+white flower,Floral
 white peach,Fruity
 yellow fruit,Fruity
 yellow peach,Fruity
