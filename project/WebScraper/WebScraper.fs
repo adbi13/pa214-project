@@ -1,4 +1,4 @@
-module WebScraper
+module EuropeanCoffee.WebScraper
 
 open System
 open System.IO
