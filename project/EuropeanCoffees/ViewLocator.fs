@@ -1,9 +1,9 @@
-namespace EuropeanCoffee.UI
+namespace EuropeanCoffees
 
 open System
 open Avalonia.Controls
 open Avalonia.Controls.Templates
-open EuropeanCoffee.UI.ViewModels
+open EuropeanCoffees.ViewModels
 
 type ViewLocator() =
     interface IDataTemplate with

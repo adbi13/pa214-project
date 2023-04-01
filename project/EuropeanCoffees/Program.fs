@@ -1,9 +1,9 @@
-﻿namespace EuropeanCoffee.UI
+﻿namespace EuropeanCoffees
 
 open System
 open Avalonia
 open Avalonia.ReactiveUI
-open EuropeanCoffee.UI
+open EuropeanCoffees
 
 module Program =
 

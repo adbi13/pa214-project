@@ -1,4 +1,4 @@
-﻿namespace EuropeanCoffee.UI.ViewModels
+﻿namespace EuropeanCoffees.ViewModels
 
 type MainWindowViewModel() =
     inherit ViewModelBase()

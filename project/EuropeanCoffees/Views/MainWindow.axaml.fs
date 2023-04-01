@@ -1,4 +1,4 @@
-namespace EuropeanCoffee.UI.Views
+namespace EuropeanCoffees.Views
 
 open Avalonia
 open Avalonia.Controls

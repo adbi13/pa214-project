@@ -1,10 +1,10 @@
-namespace EuropeanCoffee.UI
+namespace EuropeanCoffees
 
 open Avalonia
 open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.Markup.Xaml
-open EuropeanCoffee.UI.ViewModels
-open EuropeanCoffee.UI.Views
+open EuropeanCoffees.ViewModels
+open EuropeanCoffees.Views
 
 type App() =
     inherit Application()
