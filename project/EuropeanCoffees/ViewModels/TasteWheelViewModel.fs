@@ -1,15 +1,22 @@
 namespace EuropeanCoffees.ViewModels
 
+open EuropeanCoffees.Models.FilterModel
 open EuropeanCoffees.Models.TasteWheelModel
+open EuropeanCoffees.Models.ColumnContentModel
 open EuropeanCoffees.DataSource.Taste
 open LiveChartsCore
 open LiveChartsCore.SkiaSharpView
 open LiveChartsCore.SkiaSharpView.Painting
 open SkiaSharp
 open System
+open System.Collections.Specialized
+open System.Collections.ObjectModel
+open Deedle
 
-type TasteWheelViewModel(dataset, columnName, columnValue) =
+type TasteWheelViewModel(dataset) =
     inherit ViewModelBase(dataset)
+
+    let mutable actualDataset = dataset.Coffees
 
     let colorMap = Map [
         ("Nutty/Cocoa", SKColor(red=99uy, green=55uy, blue=44uy));
@@ -35,26 +42,51 @@ type TasteWheelViewModel(dataset, columnName, columnValue) =
         //     ~~~color.Blue ||| (byte (random.Next(128))),
         //     150uy)
 
-    let names, counts = tasteCountsWith dataset columnName columnValue
-
-    member this.Tastes : ISeries array = 
-        // counts
-        // |> Array.zip names
-        profileCountsWith dataset columnName columnValue
-        |> Array.groupBy (fun item -> tasteMap[fst item])
-        |> Array.map (fun (key, items) -> key, Array.sumBy snd items)
-        |> Array.map (fun (name, count) -> PieSeries<int>(
-            Values = [| count |],
+    let mutable tastes : ISeries array =
+        Map.toArray colorMap
+        |> Array.sortBy fst
+        |> Array.map (fun (name, _) -> PieSeries<int>(
+            Values = ObservableCollection<int>([| 1 |]),
             Name = name,
             Fill = new SolidColorPaint(colorMap[name])
         ))
-    
-    member this.Profiles : ISeries array =
-        profileCountsWith dataset columnName columnValue
-        |> Array.mapi (fun i (name, count) -> PieSeries<int>(
-            Values = [| count |],
+    let mutable profiles : ISeries array =
+        composedColumn dataset "Profile"
+        |> Array.sortBy (fun profile -> tasteMap[profile])
+        |> Array.mapi (fun i name -> PieSeries<int>(
+            Values = ObservableCollection<int>([| 1 |]),
             Name = name,
             InnerRadius = 130,
-            Fill = new SolidColorPaint(getRandomColor name ((i * 3) % 30))
-                
+            Fill = new SolidColorPaint(getRandomColor name i)   
         ))
+
+    member this.Tastes : ISeries array = tastes
+    member this.Profiles : ISeries array = profiles
+
+    member this.UpdateSeries (seriesArray: ISeries array) name value =
+        let series = Array.find (fun (s: ISeries) -> s.Name = name) seriesArray
+        let seriesValues: ObservableCollection<int> = series.Values :?> ObservableCollection<int>
+        // seriesValues.Clear()
+        seriesValues.Add(value)
+    
+    member this.ClearSeries (seriesArray: ISeries array) =
+        for series in seriesArray do
+            let seriesValues: ObservableCollection<int> = series.Values :?> ObservableCollection<int>
+            seriesValues.Clear()
+        
+    member this.UpdateTastes() =
+        this.ClearSeries tastes
+        profileCountsWith actualDataset
+        |> Array.groupBy (fun item -> tasteMap[fst item])
+        |> Array.map (fun (key, items) -> key, Array.sumBy snd items)
+        |> Array.iter (fun (name, count) -> this.UpdateSeries tastes name count)
+    
+    member this.UpdateProfiles() =
+        this.ClearSeries profiles
+        profileCountsWith actualDataset
+        |> Array.iter (fun (name, count) -> this.UpdateSeries profiles name count)
+
+    member this.HandleFilterUpdate(filterMap: Map<string,string>) =
+        actualDataset <- filterDataset this.Dataset.Coffees filterMap
+        this.UpdateTastes()
+        this.UpdateProfiles()

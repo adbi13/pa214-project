@@ -12,6 +12,6 @@
         <ComboBox Items="{Binding Varieties}" SelectedItem="{Binding SelectedVariety}"/>
         <ComboBox Items="{Binding Processings}" SelectedItem="{Binding SelectedProcessing}"/>
         <ComboBox Items="{Binding Roasts}" SelectedItem="{Binding SelectedRoast}"/>
-        <Button>Update</Button>
+        <Button Command="{Binding OnUpdate}">Update</Button>
     </StackPanel>
 </UserControl>

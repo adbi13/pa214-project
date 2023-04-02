@@ -1,28 +1,16 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:EuropeanCoffees.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="1000"
+        xmlns:vm="using:EuropeanCoffees.ViewModels"
         x:Class="EuropeanCoffees.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="EuropeanCoffees">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-
-        <ContentControl Grid.Row="0" Grid.Column="0" Content="{Binding CountryColumnChart}"></ContentControl>
-        <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding Filter}"></ContentControl>
-        <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding RoasteryCountryColumnChart}"></ContentControl>
-        <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding ProcessingColumnChart}"></ContentControl>
-    </Grid>
-
+    <TabControl>
+        <TabItem Header="Overview" Content="{Binding Overview}"/>
+        <TabItem Header="Categories" Content="{Binding Categories}"/>
+    </TabControl>
 </Window>
