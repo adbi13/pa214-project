@@ -14,9 +14,12 @@
     <Compile Include="DataSource\Cleaning.fs" />
     <Compile Include="DataSource\Taste.fs" />
     <Compile Include="DataSource\Dataset.fs" />
+    <Compile Include="Models\ColumnContentModel.fs" />
     <Compile Include="Models\CountsModel.fs" />
     <Compile Include="Models\TasteWheelModel.fs" />
     <Compile Include="ViewModels\ViewModelBase.fs" />
+    <Compile Include="ViewModels\FilterViewModel.fs" />
+    <Compile Include="Views\FilterView.axaml.fs" />
     <Compile Include="ViewModels\ColumnViewModel.fs" />
     <Compile Include="Views\ColumnView.axaml.fs" />
     <Compile Include="ViewModels\TasteWheelViewModel.fs" />

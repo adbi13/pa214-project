@@ -5,8 +5,7 @@ open EuropeanCoffees.DataSource
 open EuropeanCoffees.DataSource.Taste
 
 module TasteWheelModel =
-    let profileCountsWith (column: string) value =
-        let dataset = new Dataset()
+    let profileCountsWith (dataset: Dataset) (column: string) value =
         dataset.Coffees
         |> Frame.filterRowsBy column value
         |> Frame.getCol "Profile"
@@ -17,8 +16,7 @@ module TasteWheelModel =
         |> Seq.sortBy (fun (tuple: string * int) -> tasteMap[fst tuple])
         |> Seq.toArray
 
-    let tasteCountsWith (column: string) value =
-        let dataset = new Dataset()
+    let tasteCountsWith (dataset: Dataset) (column: string) value =
         dataset.Coffees
         |> Frame.filterRowsBy column value
         |> Frame.getCol "Tastes"

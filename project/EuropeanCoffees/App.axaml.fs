@@ -5,6 +5,7 @@ open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.Markup.Xaml
 open EuropeanCoffees.ViewModels
 open EuropeanCoffees.Views
+open EuropeanCoffees.DataSource
 
 type App() =
     inherit Application()
@@ -17,7 +18,8 @@ type App() =
 
         match this.ApplicationLifetime with
         | :? IClassicDesktopStyleApplicationLifetime as desktop ->
-             desktop.MainWindow <- MainWindow(DataContext = MainWindowViewModel())
+            let dataset = new Dataset()
+            desktop.MainWindow <- MainWindow(DataContext = MainWindowViewModel(dataset))
         | _ -> ()
 
         base.OnFrameworkInitializationCompleted()

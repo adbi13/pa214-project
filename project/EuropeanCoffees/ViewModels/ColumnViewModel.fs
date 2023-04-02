@@ -4,10 +4,10 @@ open EuropeanCoffees.Models.CountsModel
 open LiveChartsCore
 open LiveChartsCore.SkiaSharpView
 
-type ColumnViewModel(columnName) =
-    inherit ViewModelBase()
+type ColumnViewModel(dataset, columnName) =
+    inherit ViewModelBase(dataset)
 
-    let names, counts = columnCounts columnName
+    let names, counts = columnCounts dataset columnName
 
     member this.Series : ISeries array = 
         [|

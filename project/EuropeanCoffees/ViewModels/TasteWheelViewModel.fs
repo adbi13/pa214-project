@@ -8,8 +8,8 @@ open LiveChartsCore.SkiaSharpView.Painting
 open SkiaSharp
 open System
 
-type TasteWheelViewModel(columnName, columnValue) =
-    inherit ViewModelBase()
+type TasteWheelViewModel(dataset, columnName, columnValue) =
+    inherit ViewModelBase(dataset)
 
     let colorMap = Map [
         ("Nutty/Cocoa", SKColor(red=99uy, green=55uy, blue=44uy));
@@ -35,12 +35,12 @@ type TasteWheelViewModel(columnName, columnValue) =
         //     ~~~color.Blue ||| (byte (random.Next(128))),
         //     150uy)
 
-    let names, counts = tasteCountsWith columnName columnValue
+    let names, counts = tasteCountsWith dataset columnName columnValue
 
     member this.Tastes : ISeries array = 
         // counts
         // |> Array.zip names
-        profileCountsWith columnName columnValue
+        profileCountsWith dataset columnName columnValue
         |> Array.groupBy (fun item -> tasteMap[fst item])
         |> Array.map (fun (key, items) -> key, Array.sumBy snd items)
         |> Array.map (fun (name, count) -> PieSeries<int>(
@@ -50,7 +50,7 @@ type TasteWheelViewModel(columnName, columnValue) =
         ))
     
     member this.Profiles : ISeries array =
-        profileCountsWith columnName columnValue
+        profileCountsWith dataset columnName columnValue
         |> Array.mapi (fun i (name, count) -> PieSeries<int>(
             Values = [| count |],
             Name = name,
