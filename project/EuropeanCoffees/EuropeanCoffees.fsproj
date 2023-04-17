@@ -11,13 +11,17 @@
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
   <ItemGroup>
+    <!-- DataSource -->
     <Compile Include="DataSource\Cleaning.fs" />
     <Compile Include="DataSource\Taste.fs" />
+    <Compile Include="DataSource\Countries.fs" />
     <Compile Include="DataSource\Dataset.fs" />
+    <!-- Models -->
     <Compile Include="Models\ColumnContentModel.fs" />
     <Compile Include="Models\FilterModel.fs" />
     <Compile Include="Models\CountsModel.fs" />
     <Compile Include="Models\TasteWheelModel.fs" />
+    <!-- UserControls -->
     <Compile Include="ViewModels\ViewModelBase.fs" />
     <Compile Include="ViewModels\FilterViewModel.fs" />
     <Compile Include="Views\FilterView.axaml.fs" />
@@ -25,10 +29,16 @@
     <Compile Include="Views\ColumnView.axaml.fs" />
     <Compile Include="ViewModels\TasteWheelViewModel.fs" />
     <Compile Include="Views\TasteWheelView.axaml.fs" />
+    <Compile Include="ViewModels\MapViewModel.fs" />
+    <Compile Include="Views\MapView.axaml.fs" />
+    <Compile Include="ViewModels\StatsViewModel.fs" />
+    <Compile Include="Views\StatsView.axaml.fs" />
+    <!-- Tabs -->
     <Compile Include="ViewModels\CategoriesViewModel.fs" />
     <Compile Include="Views\CategoriesView.axaml.fs" />
     <Compile Include="ViewModels\OverviewViewModel.fs" />
     <Compile Include="Views\OverviewView.axaml.fs" />
+    <!-- Windows -->
     <Compile Include="ViewModels\MainWindowViewModel.fs" />
     <Compile Include="Views\MainWindow.axaml.fs" />
     <Compile Include="ViewLocator.fs" />
@@ -43,6 +53,8 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-preview5" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview5" />
     <PackageReference Include="Deedle" Version="3.0.0" />
+    <PackageReference Include="FSharp.Data" Version="5.0.2" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-beta.700-11.0.0-preview5" />
+    <PackageReference Include="ReactiveUI" Version="18.4.26" />
   </ItemGroup>
 </Project>

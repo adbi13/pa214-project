@@ -41,4 +41,3 @@ type ColumnViewModel(dataset, columnName) =
     // member this.Greeting = "Welcome to Avalonia!"
     // member this.Series = series
 
-

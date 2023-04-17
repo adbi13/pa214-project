@@ -10,12 +10,16 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
             
         <ContentControl Grid.Row="0" Grid.Column="0" Content="{Binding Filter}"></ContentControl>
-        <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding TasteWheel}"></ContentControl>
+        <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding Stats}"></ContentControl>
+        <ContentControl Grid.Row="2" Grid.Column="0" Content="{Binding Map}"></ContentControl>
+        <ContentControl Grid.Row="2" Grid.Column="1" Content="{Binding TasteWheel}"></ContentControl>
     </Grid>
 </UserControl>

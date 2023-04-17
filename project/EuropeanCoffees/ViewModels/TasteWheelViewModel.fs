@@ -27,13 +27,33 @@ type TasteWheelViewModel(dataset) =
         ("Sour/Fermented", SKColor(red=107uy, green=212uy, blue=37uy));
     ]
 
+    let mutable profileCountsMap =
+        // profileCountsWith actualDataset
+        // |> Array.groupBy (fun item -> tasteMap[fst item])
+        // |> Array.map (fun (key, items) -> key, Array.sumBy snd items)
+        composedColumn dataset "Profile"
+        |> Array.groupBy (fun item -> tasteMap[item])
+        |> Array.map (fun (key, items) -> key, items.Length)
+        |> Array.sortBy fst
+        |> Map.ofArray
+
+    let rec getPositionWithinTaste (actualPosition: int) tastes taste =
+        match tastes with
+        | [] -> invalidArg "tastes" "Taste not in map"
+        | head::_ when head = taste -> actualPosition
+        | head::tail ->
+            // printfn "%s %d %d" head profileCountsMap[head] actualPosition
+            getPositionWithinTaste (actualPosition - profileCountsMap[head]) tail taste
+
     let getRandomColor name colorShift =
         let random = Random()
         let mutable h = 0f
         let mutable s = 0f
         let mutable l = 0f
         colorMap[tasteMap[name]].ToHsl(&h, &s, &l)
-        SKColor.FromHsl(h + float32 colorShift, s, l, 255uy)
+        let positionWithinTaste = getPositionWithinTaste colorShift (List.ofSeq profileCountsMap.Keys) tasteMap[name]
+
+        SKColor.FromHsl(h + 5f, s - 5f, l - (0.5f * float32 positionWithinTaste), 255uy)
         
         
         // new SKColor(
@@ -48,6 +68,7 @@ type TasteWheelViewModel(dataset) =
         |> Array.map (fun (name, _) -> PieSeries<int>(
             Values = ObservableCollection<int>([| 1 |]),
             Name = name,
+            InnerRadius = 50,
             Fill = new SolidColorPaint(colorMap[name])
         ))
     let mutable profiles : ISeries array =
@@ -76,9 +97,14 @@ type TasteWheelViewModel(dataset) =
         
     member this.UpdateTastes() =
         this.ClearSeries tastes
-        profileCountsWith actualDataset
-        |> Array.groupBy (fun item -> tasteMap[fst item])
-        |> Array.map (fun (key, items) -> key, Array.sumBy snd items)
+        let counts =
+            profileCountsWith actualDataset
+            |> Array.groupBy (fun item -> tasteMap[fst item])
+            |> Array.map (fun (key, items) -> key, Array.sumBy snd items)
+        
+        profileCountsMap <- Map.ofArray counts
+
+        counts
         |> Array.iter (fun (name, count) -> this.UpdateSeries tastes name count)
     
     member this.UpdateProfiles() =

@@ -1,0 +1,52 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:vm="using:EuropeanCoffees.ViewModels"
+             x:DataType="vm:StatsViewModel"
+             x:Class="EuropeanCoffees.Views.StatsView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+            
+        <StackPanel Grid.Row="0"
+                    Grid.Column="0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="20">
+            <ContentControl Content="{Binding AvgPrice}" FontSize="40" HorizontalAlignment="Right"/>
+            <TextBlock FontSize="20" HorizontalAlignment="Right">Average Price (kg)</TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="0"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Margin="20">
+            <ContentControl Content="{Binding AvgScore}" FontSize="40" HorizontalAlignment="Left"/>
+            <TextBlock FontSize="20" HorizontalAlignment="Left">Average Score</TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Grid.Column="0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="20">
+            <ContentControl Content="{Binding MinAltitude}" FontSize="40" HorizontalAlignment="Right"/>
+            <TextBlock FontSize="20" HorizontalAlignment="Right">Minimal Altitude</TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="20">
+            <ContentControl Content="{Binding MaxAltitude}" FontSize="40" HorizontalAlignment="Left"/>
+            <TextBlock FontSize="20" HorizontalAlignment="Left">Maximal Altitude</TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>

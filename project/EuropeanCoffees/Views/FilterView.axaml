@@ -7,11 +7,11 @@
              xmlns:vm="using:EuropeanCoffees.ViewModels"
              x:DataType="vm:FilterViewModel">
 
-    <StackPanel Orientation="Horizontal">
-        <ComboBox Items="{Binding Countries}" SelectedItem="{Binding SelectedCountry}"/>
-        <ComboBox Items="{Binding Varieties}" SelectedItem="{Binding SelectedVariety}"/>
-        <ComboBox Items="{Binding Processings}" SelectedItem="{Binding SelectedProcessing}"/>
-        <ComboBox Items="{Binding Roasts}" SelectedItem="{Binding SelectedRoast}"/>
-        <Button Command="{Binding OnUpdate}">Update</Button>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+        <ComboBox Items="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" Margin="10"/>
+        <ComboBox Items="{Binding Varieties}" SelectedItem="{Binding SelectedVariety}" Margin="10"/>
+        <ComboBox Items="{Binding Processings}" SelectedItem="{Binding SelectedProcessing}" Margin="10"/>
+        <ComboBox Items="{Binding Roasts}" SelectedItem="{Binding SelectedRoast}" Margin="10"/>
+        <Button Command="{Binding OnUpdate}" Margin="10">Update</Button>
     </StackPanel>
 </UserControl>

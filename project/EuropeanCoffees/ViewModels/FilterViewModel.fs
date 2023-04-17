@@ -3,7 +3,7 @@ namespace EuropeanCoffees.ViewModels
 open EuropeanCoffees.Models.ColumnContentModel
 open Avalonia
 
-type FilterViewModel(dataset) as this =
+type FilterViewModel(dataset) =
     inherit ViewModelBase(dataset)
 
     let mutable filterMap = Map.empty
