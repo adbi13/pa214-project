@@ -53,7 +53,7 @@ type TasteWheelViewModel(dataset) =
         colorMap[tasteMap[name]].ToHsl(&h, &s, &l)
         let positionWithinTaste = getPositionWithinTaste colorShift (List.ofSeq profileCountsMap.Keys) tasteMap[name]
 
-        SKColor.FromHsl(h + 5f, s - 5f, l - (0.5f * float32 positionWithinTaste), 255uy)
+        SKColor.FromHsl(h + 5f, s - 10f, l - (0.5f * float32 positionWithinTaste), 255uy)
         
         
         // new SKColor(
@@ -69,7 +69,11 @@ type TasteWheelViewModel(dataset) =
             Values = ObservableCollection<int>([| 1 |]),
             Name = name,
             InnerRadius = 50,
-            Fill = new SolidColorPaint(colorMap[name])
+            Fill = new SolidColorPaint(colorMap[name]),
+            DataLabelsPaint = new SolidColorPaint(new SKColor(30uy, 30uy, 30uy)),
+            DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Start,
+            DataLabelsFormatter = (fun _ -> $"{name}"),
+            DataLabelsPadding = LiveChartsCore.Drawing.Padding(60, 60, 60, 60)
         ))
     let mutable profiles : ISeries array =
         composedColumn dataset "Profile"
