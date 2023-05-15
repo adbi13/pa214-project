@@ -21,6 +21,7 @@
     <Compile Include="Models\FilterModel.fs" />
     <Compile Include="Models\CountsModel.fs" />
     <Compile Include="Models\TasteWheelModel.fs" />
+    <Compile Include="Models\CoffeeListModel.fs" />
     <!-- UserControls -->
     <Compile Include="ViewModels\ViewModelBase.fs" />
     <Compile Include="ViewModels\FilterViewModel.fs" />
@@ -33,6 +34,8 @@
     <Compile Include="Views\MapView.axaml.fs" />
     <Compile Include="ViewModels\StatsViewModel.fs" />
     <Compile Include="Views\StatsView.axaml.fs" />
+    <Compile Include="ViewModels\CoffeeListViewModel.fs" />
+    <Compile Include="Views\CoffeeListView.axaml.fs" />
     <!-- Tabs -->
     <Compile Include="ViewModels\CategoriesViewModel.fs" />
     <Compile Include="Views\CategoriesView.axaml.fs" />

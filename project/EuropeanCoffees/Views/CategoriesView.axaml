@@ -18,6 +18,7 @@
         </Grid.ColumnDefinitions>
             
         <ContentControl Grid.Row="0" Grid.Column="0" Content="{Binding Filter}"></ContentControl>
+        <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding CoffeeList}"></ContentControl>
         <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding Stats}"></ContentControl>
         <ContentControl Grid.Row="2" Grid.Column="0" Content="{Binding Map}"></ContentControl>
         <ContentControl Grid.Row="2" Grid.Column="1" Content="{Binding TasteWheel}"></ContentControl>

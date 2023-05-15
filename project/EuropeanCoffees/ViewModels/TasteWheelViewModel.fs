@@ -71,9 +71,9 @@ type TasteWheelViewModel(dataset) =
             InnerRadius = 50,
             Fill = new SolidColorPaint(colorMap[name]),
             DataLabelsPaint = new SolidColorPaint(new SKColor(30uy, 30uy, 30uy)),
-            DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Start,
+            DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Outer,
             DataLabelsFormatter = (fun _ -> $"{name}"),
-            DataLabelsPadding = LiveChartsCore.Drawing.Padding(60, 60, 60, 60)
+            DataLabelsPadding = LiveChartsCore.Drawing.Padding(45, 45, 45, 60)
         ))
     let mutable profiles : ISeries array =
         composedColumn dataset "Profile"
