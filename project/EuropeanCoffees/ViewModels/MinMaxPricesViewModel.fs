@@ -10,19 +10,23 @@ open SkiaSharp
 type MinMaxPricesViewModel(dataset, columnName) =
     inherit ViewModelBase(dataset)
 
-    let countries, minimums, maximums = priceMinMax dataset columnName
+    let mutable countries, minimums, maximums = priceMinMax dataset columnName
+
+    let indexedMinimums = minimums |> Array.mapi (fun i value -> decimal i, value)
+    let indexedMaximums = maximums |> Array.mapi (fun i value -> decimal i, value)
+
 
     member this.Series : ISeries array = 
         [|
-            LineSeries<decimal>(
+            ScatterSeries<decimal>(
                 Values = minimums,
-                Fill = null,
+                //Fill = null,
                 TooltipLabelFormatter =
                     fun chartPoint -> $"Min price: €{chartPoint.PrimaryValue}"
             );
-            LineSeries<decimal>(
+            ScatterSeries<decimal>(
                 Values = maximums,
-                Fill = null,
+                //Fill = null,
                 TooltipLabelFormatter =
                     fun chartPoint -> $"Max price: €{chartPoint.PrimaryValue}"
             );
@@ -36,6 +40,13 @@ type MinMaxPricesViewModel(dataset, columnName) =
                 // TextSize = 10,
                 // MinStep = 1,
                 ShowSeparatorLines = true
+            );
+        |]
+    
+    member this.YAxes : Axis array =
+        [|
+            Axis(
+                MinLimit = 0
             );
         |]
 

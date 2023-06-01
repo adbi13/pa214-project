@@ -4,13 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+             xmlns:lv="using:LiveChartsCore.SkiaSharpView"
              xmlns:vm="using:EuropeanCoffees.ViewModels"
              x:DataType="vm:MinMaxPricesViewModel"
              x:Class="EuropeanCoffees.Views.MinMaxPricesView">
     <lvc:CartesianChart
         Series="{Binding Series}"
         XAxes="{Binding XAxes}"
+        YAxes="{Binding YAxes}"
         Title="{Binding Title}"
         LegendPosition="Hidden"
-        ZoomMode="X"/>
+        ZoomMode="X">
+        <!-- <lvc:CartesianChart.YAxes >
+            <lv:Axis MinLimit="0"/>  
+        </lvc:CartesianChart.YAxes> -->
+    </lvc:CartesianChart>
 </UserControl>
