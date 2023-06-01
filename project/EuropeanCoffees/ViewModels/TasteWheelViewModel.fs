@@ -19,12 +19,12 @@ type TasteWheelViewModel(dataset) =
     let mutable actualDataset = dataset.Coffees
 
     let colorMap = Map [
-        ("Nutty/Cocoa", SKColor(red=99uy, green=55uy, blue=44uy));
         ("Fruity", SKColor(red=236uy, green=78uy, blue=32uy));
-        ("Floral", SKColor(red=1uy, green=111uy, blue=185uy));
-        ("Sweet", SKColor(red=130uy, green=2uy, blue=99uy));
-        ("Spices", SKColor(red=255uy, green=149uy, blue=5uy));
-        ("Sour/Fermented", SKColor(red=107uy, green=212uy, blue=37uy));
+        ("Nutty/Cocoa", SKColor(red=115uy, green=36uy, blue=17uy));
+        ("Floral", SKColor(red=207uy, green=14uy, blue=171uy));
+        ("Sweet", SKColor(red=214uy, green=11uy, blue=84uy));
+        ("Spices", SKColor(red=92uy, green=66uy, blue=41uy));
+        ("Sour/Fermented", SKColor(red=214uy, green=150uy, blue=11uy));
     ]
 
     let mutable profileCountsMap =

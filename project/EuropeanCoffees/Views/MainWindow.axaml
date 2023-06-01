@@ -12,5 +12,6 @@
     <TabControl>
         <TabItem Header="Overview" Content="{Binding Overview}"/>
         <TabItem Header="Categories" Content="{Binding Categories}"/>
+        <TabItem Header="Compare" Content="{Binding Compare}"/>
     </TabControl>
 </Window>

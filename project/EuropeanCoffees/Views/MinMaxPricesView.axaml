@@ -2,10 +2,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="EuropeanCoffees.Views.MapView"
+             xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
              xmlns:vm="using:EuropeanCoffees.ViewModels"
-             x:DataType="vm:MapViewModel">
-    <lvc:GeoMap Series="{Binding Series}" />
+             x:DataType="vm:MinMaxPricesViewModel"
+             x:Class="EuropeanCoffees.Views.MinMaxPricesView">
+    <lvc:CartesianChart
+        Series="{Binding Series}"
+        XAxes="{Binding XAxes}"
+        Title="{Binding Title}"
+        LegendPosition="Hidden"
+        ZoomMode="X"/>
 </UserControl>

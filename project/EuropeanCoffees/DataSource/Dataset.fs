@@ -23,4 +23,9 @@ type Dataset() =
             |> Series.mapValues profilesToTastes
         df.AddColumn("Tastes", coffeeTastes)
 
+        let newProcessings =
+            df.GetColumn<string>("Processing")
+            |> Series.mapValues correctProcessing
+        df.ReplaceColumn("Processing", newProcessings)
+
     member this.Coffees = df

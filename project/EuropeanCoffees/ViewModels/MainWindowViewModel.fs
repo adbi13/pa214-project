@@ -5,6 +5,7 @@ type MainWindowViewModel(dataset) =
 
     member this.Overview = OverviewViewModel(dataset)
     member this.Categories = CategoriesViewModel(dataset)
+    member this.Compare = CompareViewModel(dataset)
 
     // member this.CountryColumnChart = ColumnViewModel(dataset, "Country")
     // member this.VarietyColumnChart = ColumnViewModel(dataset, "Variety")

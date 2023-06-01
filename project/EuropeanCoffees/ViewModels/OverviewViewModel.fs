@@ -9,3 +9,5 @@ type OverviewViewModel(dataset) =
     member this.RoasteryMap = MapViewModel(dataset, "Roastery Country")
     member this.Filter = FilterViewModel(dataset)
     member this.OriginMap = MapViewModel(dataset, "Country")
+    member this.CountryPricesChart = MinMaxPricesViewModel(dataset, "Country")
+    member this.RoasteryCountryPricesChart = MinMaxPricesViewModel(dataset, "Roastery Country")

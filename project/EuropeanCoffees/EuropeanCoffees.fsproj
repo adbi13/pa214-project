@@ -18,6 +18,7 @@
     <Compile Include="DataSource\Dataset.fs" />
     <!-- Models -->
     <Compile Include="Models\ColumnContentModel.fs" />
+    <Compile Include="Models\MinMaxPricesModel.fs" />
     <Compile Include="Models\FilterModel.fs" />
     <Compile Include="Models\CountsModel.fs" />
     <Compile Include="Models\TasteWheelModel.fs" />
@@ -36,6 +37,10 @@
     <Compile Include="Views\StatsView.axaml.fs" />
     <Compile Include="ViewModels\CoffeeListViewModel.fs" />
     <Compile Include="Views\CoffeeListView.axaml.fs" />
+    <Compile Include="ViewModels\CompareViewModel.fs" />
+    <Compile Include="Views\CompareView.axaml.fs" />
+    <Compile Include="ViewModels\MinMaxPricesViewModel.fs" />
+    <Compile Include="Views\MinMaxPricesView.axaml.fs" />
     <!-- Tabs -->
     <Compile Include="ViewModels\CategoriesViewModel.fs" />
     <Compile Include="Views\CategoriesView.axaml.fs" />
@@ -50,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.0.0-preview5" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.0-preview5" />
     <PackageReference Include="Avalonia.Desktop" Version="11.0.0-preview5" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-preview5" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->

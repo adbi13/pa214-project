@@ -16,9 +16,9 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
-        <ContentControl Grid.Row="0" Grid.Column="0" Content="{Binding OriginMap}"></ContentControl>
-        <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding CountryColumnChart}"></ContentControl>
-        <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding RoasteryCountryColumnChart}"></ContentControl>
+        <ContentControl Grid.Row="0" Grid.Column="0" Content="{Binding CountryPricesChart}"></ContentControl>
+        <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding OriginMap}"></ContentControl>
+        <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding RoasteryCountryPricesChart}"></ContentControl>
         <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding RoasteryMap}"></ContentControl>
     </Grid>
 </UserControl>

@@ -21,9 +21,18 @@ module Cleaning =
         | "serto 74112" | "etiopes" -> "heirloom"
         | _ -> variety
 
+    let correctVarietyAbbr (variety: string) =
+        match variety.ToLower() with
+        | "sl34" -> "SL34"
+        | "sl28" -> "SL28"
+        | "2sl" -> "2SL"
+        | _ -> variety
+
     let cleanVarieties (rawInput: string) =
         rawInput.Split(", ")
         |> Seq.map (fun variety -> correctVariety (variety.ToLower()))
+        |> Seq.map System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase
+        |> Seq.map correctVarietyAbbr
         |> Seq.reduce (fun a b -> $"{a}, {b}")
 
     let correctProfile profile =
@@ -67,3 +76,18 @@ module Cleaning =
         |> Seq.map (fun profile -> correctProfile (profile.ToLower()))
         |> Seq.reduce (fun a b -> $"{a}, {b}")
 
+    let correctProcessing processing =
+        match processing with
+        | "natural" | "Black Diamond Natural" -> "Natural"
+        | "Fully Washed"-> "Washed"
+        | "Yellow Honey" | "Black Honey" -> "Honey"
+
+        | "Anaerobic Natural" | "Anaerobic Honey" | "Carbonic Maceration"
+        | "96h fermented, washed" | "777 Fermantation"
+        | "Double Fermentation Natural" | "Washed with double fermentation"
+        | "Natural Anaerobic Fermentation" | "Double Diamond Natural Anaerobic"
+        | "48-hour cherry maceration" | "Natural & Fermentation"
+        | "Natural, Wet Fermentation 72 hours" | "Fully washed, Wet Fermentation 72 hours"
+        | "Natural, 48 hours maceration" -> "Fermentation"
+
+        | _ -> processing
