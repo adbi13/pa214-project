@@ -2,65 +2,31 @@
 
 This project aims to visualize and compare coffees produced by roasteries in Europe. The initial dataset contains only 111 samples of coffee but is diverse enough to show the capabilities of the visualizations. I decided to implement the solution in F# to test its data processing and visualization capabilities.
 
-## Columns
-The collected dataset contains these columns: Roastery, Roastery City, Roastery Country, Name, Country, Region, Farm, Processing, Variety, Altitude min, Altitude max, Price (EUR per kg), Profile, Roast, Score.
 
-### Roastery
-The name of the roastery should be unique, at least within the country and city. It does not really carry any important information, but it is good for more detailed distinguishing between samples. Maybe I can try to compare roasters' taste preferences.
+## Authors
 
-### Roastery City
-It carries even lesser information than the roastery name, but it belongs to the roasteries, and I believe it is nice to present them together. I had an idea to compare, e.g., coffee prices between small and big cities, but it would be too complicated processing another dataset just to provide this information as I believe there would not be any significant difference.
+- [Adela Bierska](https://www.github.com/adbi13)
 
-### Roastery Country
-There are some theories that, for example, people from northern Europe prefer more bitter coffee than people from the south. Maybe we can find some other differences between nationalities. The samples' roastery country is also important to understand the price variability as I already noticed that prices across countries quite differ. I would like to try to use some choropleth maps.
 
-![Countries Counts](graphs/RoasteryCountriesCounts.png)
+## Installation
 
-### Name (of the coffee)
-This column is truly random. Each roastery has its own way how to name its coffee, so it is only for a nice header.
+The application needs [.NET 7.0](https://dotnet.microsoft.com/en-us/download). After installation run this script to start the program:
 
-### Country (of origin)
-One of the most important columns, as it can be visualized in so many ways! It affects many other columns, such as varieties, processing, etc. I tried to do some pie charts to compare taste ratios between countries, and it looks like there will be some nice results. E.g., coffee from Brazil typically has cocoa or nuts notes. On the opposite, coffee from Ethiopia is more floral and fruity. I know that from real life by tasting various coffees, and it is nice to see that the data agrees with me.
+```bash
+    cd project/EuropeanCoffees
+    dotnet run
+```
 
-![Countries Counts](graphs/CountriesCounts.png)
 
-![Brazil](graphs/BrazilTastes.png)
+## License
 
-![Ethiopia](graphs/EthiopiaTastes.png)
+[BSD 3-Clause License](https://choosealicense.com/licenses/bsd-3-clause/)
 
-### Region & Farm
-These are here to have the data more complete. I do not have any plans to use them.
 
-### Processing
-Very nice categorical data, which directly affects the taste of the coffee. I think a lot about how to cope with fermentation here as there are many types of it, and I do not want so many small fermentation categories within my dataset.
+## Screenshots
 
-### Variety
-Singular in the name of this column is not really correct because it is usual to mix more varieties within one batch of coffee. That is why the type of this column is `string list`, which is quite impractical.
+![Overview View](screenshots/Overview.png)
 
-![Varieties Counts](graphs/VarietiesCounts.png)
+![Compare View](screenshots/CompareBrazilEthiopia.png)
 
-### Altitude min & max
-An altitude also affects the taste of the coffee, but I am not sure how to visualize this combination of numeric and categorical data. Maybe I can divide the altitude into some levels as *low*, *high*, etc.
-
-### Price
-An actual price of 1 kg of the sample in EUR. Prices are always nice for comparison, so I think I will use them a lot.
-
-### Profile
-Base raw data for taste analysis and visualization. There are many profiles in the dataset as its the most concrete specification, and it strongly depends on the roaster's perfectionism and cultural (from a food point of view) background. Due to this, it is impossible to use profiles as they are, so I used the flavor wheel to assign a major taste to each of the profiles.
-
-![Profiles Counts](graphs/ProfilesCounts.png)
-
-![Flavor Wheel](data/flavor-wheel.png)
-
-### Roast
-Division to espresso (dark) or filter (light) roast.
-
-### Score
-This is a really nice piece of data; unfortunately, only a few samples have this column filled, so it is pretty useless.
-
-## Views
-### General Overview of the Dataset
-The first of the views will contain only a general overview of samples collected in the dataset. There will be some column plots, maps of origin countries, and Sankey graphs to visualize the relationship between countries of origin and other columns.
-
-### Concrete View of a Category
-There will be possible to choose one value from columns with limited domain (i.e., variety, processing, roast, origin country, etc.) and see its properties. There will be radar or coxcomb charts to visualize taste partition. Also, I would like to try to create sunburst chart form profiles to make a miniature version of the flavor wheel for the selected category.
+![Categories View](screenshots/CategoriesEthiopia.png)
